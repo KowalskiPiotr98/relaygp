@@ -1,6 +1,7 @@
 package main
 
 import (
+	"relaygp/client"
 	"relaygp/config"
 	"relaygp/server"
 
@@ -16,6 +17,10 @@ func init() {
 }
 
 func main() {
+	if err := client.SendMessage(client.MessageOpts{}); err != nil {
+		panic(err)
+	}
+
 	log.Infof("Setting up server...")
 	server.Listen()
 }
