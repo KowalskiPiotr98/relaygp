@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"relaygp/server"
+
+	log "github.com/sirupsen/logrus"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	log.SetLevel(log.DebugLevel)
+	log.Infof("Setting up server...")
+	server.Listen()
 }
