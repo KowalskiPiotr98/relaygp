@@ -1,6 +1,7 @@
 package server
 
 import (
+	"relaygp/config"
 	"time"
 
 	smtp "github.com/emersion/go-smtp"
@@ -11,12 +12,12 @@ func Listen() {
 	s := smtp.NewServer(makeNewBackend())
 
 	// test with: echo -ne 'ehlo localhost\r\nmail from:me@localhost\r\nrcpt to:you@localhost\r\ndata\r\ntest message\r\n.\r\n' | netcat localhost 9873
-	s.Addr = "localhost:9873"
-	s.Domain = "localhost"
+	s.Addr = config.GetCurrentConfig().ListenerConfig.ListenAddress
+	s.Domain = s.Addr
 	s.WriteTimeout = 10 * time.Second
 	s.ReadTimeout = 10 * time.Second
-	s.MaxMessageBytes = 1024 * 1024
-	s.MaxRecipients = 50
+	s.MaxMessageBytes = config.GetCurrentConfig().ListenerConfig.MaxMessageBytes
+	s.MaxRecipients = config.GetCurrentConfig().ListenerConfig.MaxRecipients
 	s.AllowInsecureAuth = true
 
 	if err := s.ListenAndServe(); err != nil {

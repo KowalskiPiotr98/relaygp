@@ -16,6 +16,8 @@ var (
 
 type config struct {
 	DebugMode bool
+
+	ListenerConfig listenerConfig
 }
 
 func init() {
