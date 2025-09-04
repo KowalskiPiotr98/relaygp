@@ -8,8 +8,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func Listen() {
-	s := smtp.NewServer(makeNewBackend())
+func Listen(handlerFunc Handler) {
+	s := smtp.NewServer(makeNewBackend(handlerFunc))
 
 	// test with: echo -ne 'ehlo localhost\r\nmail from:me@localhost\r\nrcpt to:you@localhost\r\ndata\r\ntest message\r\n.\r\n' | netcat localhost 9873
 	s.Addr = config.GetCurrentConfig().ListenerConfig.ListenAddress

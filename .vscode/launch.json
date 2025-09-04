@@ -9,6 +9,10 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
+            "env": {
+                "RELAYGP_DEBUG": "true",
+                "RELAYGP_LISTEN": "localhost:2500",
+            },
             "program": "."
         }
     ]

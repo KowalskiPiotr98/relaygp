@@ -8,6 +8,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var (
+	handler server.Handler = func(from, to string, data []byte) error {
+		return client.SendMessage(client.MessageOpts{
+			To:   to,
+			Data: data,
+		})
+	}
+)
+
 func init() {
 	if config.GetCurrentConfig().DebugMode {
 		log.SetLevel(log.DebugLevel)
@@ -17,10 +26,6 @@ func init() {
 }
 
 func main() {
-	if err := client.SendMessage(client.MessageOpts{}); err != nil {
-		panic(err)
-	}
-
 	log.Infof("Setting up server...")
-	server.Listen()
+	server.Listen(handler)
 }

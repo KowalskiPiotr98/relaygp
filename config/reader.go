@@ -22,7 +22,8 @@ type config struct {
 
 func init() {
 	currentConfig = config{
-		DebugMode: readOptionalEnvVar("debug", "false") == "true",
+		DebugMode:      readOptionalEnvVar("debug", "false") == "true",
+		ListenerConfig: initListenerConfig(),
 	}
 }
 

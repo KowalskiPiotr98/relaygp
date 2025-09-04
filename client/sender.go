@@ -1,31 +1,20 @@
 package client
 
 import (
-	mail "github.com/wneessen/go-mail"
+	"net/smtp"
 )
 
 type MessageOpts struct {
+	To   string
+	Data []byte
 }
 
 func SendMessage(opts MessageOpts) error {
-	message := mail.NewMsg()
-
-	if err := message.From("test@localhost"); err != nil {
-		return err
-	}
-	if err := message.To("test@localhost"); err != nil {
-		return err
-	}
-	message.Subject("test")
-	message.SetBodyString(mail.TypeTextPlain, "fuck off")
-
-	client, err := mail.NewClient(
-		"localhost",
-		mail.WithPort(2525),
-		mail.WithTLSPolicy(mail.NoTLS),
+	return smtp.SendMail(
+		"localhost:2525",
+		nil,
+		"test@localhost",
+		[]string{opts.To},
+		opts.Data,
 	)
-	if err != nil {
-		return nil
-	}
-	return client.DialAndSend(message)
 }
