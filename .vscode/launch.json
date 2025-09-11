@@ -12,6 +12,8 @@
             "env": {
                 "RELAYGP_DEBUG": "true",
                 "RELAYGP_LISTEN": "localhost:2500",
+                "RELAYGP_SENDER_ADDRESS": "localhost:2525",
+                "RELAYGP_SENDER_NAME": "test@localhost",
             },
             "program": "."
         }
