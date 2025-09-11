@@ -18,11 +18,14 @@ type config struct {
 	DebugMode bool
 
 	ListenerConfig listenerConfig
+	SenderConfig   clientConfig
 }
 
 func init() {
 	currentConfig = config{
-		DebugMode: readOptionalEnvVar("debug", "false") == "true",
+		DebugMode:      readOptionalEnvVar("debug", "false") == "true",
+		ListenerConfig: initListenerConfig(),
+		SenderConfig:   initClientConfig(),
 	}
 }
 

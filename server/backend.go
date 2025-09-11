@@ -5,15 +5,21 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type backend struct{}
+type Handler func(from string, to string, data []byte) error
+
+type backend struct {
+	handlerFunc Handler
+}
 
 var _ smtp.Backend = (*backend)(nil)
 
-func makeNewBackend() *backend {
-	return &backend{}
+func makeNewBackend(handlerFunc Handler) *backend {
+	return &backend{
+		handlerFunc: handlerFunc,
+	}
 }
 
 func (b *backend) NewSession(c *smtp.Conn) (smtp.Session, error) {
 	log.Debug("Setting up new session")
-	return makeNewSession(), nil
+	return makeNewSession(b.handlerFunc), nil
 }
